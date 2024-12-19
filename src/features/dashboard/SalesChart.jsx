@@ -1,9 +1,6 @@
-/* eslint-disable react/prop-types */
-
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
 import Heading from "../../ui/Heading";
-import { useDarkMode } from "../../context/DarkModeContext";
 import {
   Area,
   AreaChart,
@@ -13,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 
 const StyledSalesChart = styled(DashboardBox)`
@@ -44,7 +42,7 @@ function SalesChart({ bookings, numDays }) {
         .reduce((acc, cur) => acc + cur.extrasPrice, 0),
     };
   });
-  console.log(data);
+
   const colors = isDarkMode
     ? {
         totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
@@ -58,11 +56,12 @@ function SalesChart({ bookings, numDays }) {
         text: "#374151",
         background: "#fff",
       };
+
   return (
     <StyledSalesChart>
       <Heading as="h2">
-        Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash; {""}{" "}
-        {format(allDates.at(-1), "MMM dd yyyy")}
+        Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
+        {format(allDates.at(-1), "MMM dd yyyy")}{" "}
       </Heading>
 
       <ResponsiveContainer height={300} width="100%">

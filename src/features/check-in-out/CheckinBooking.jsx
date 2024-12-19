@@ -6,16 +6,14 @@ import Heading from "../../ui/Heading";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
+import Spinner from "../../ui/Spinner";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../bookings/useBooking";
-import Spinner from "../../ui/Spinner";
-import { useState } from "react";
-import CheckBox from "../../ui/Checkbox";
-import { useEffect } from "react";
-import { formatCurrency } from "../../utils/helpers";
-import { useChecking } from "./useCheckin";
+import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox";
+import { formatCurrency } from "../../utils/helpers";
+import { useCheckin } from "./useCheckin";
 import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
@@ -29,14 +27,15 @@ const Box = styled.div`
 function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
-  const { booking, isPending } = useBooking();
-  const { settings, isPending: isLoadingSettings } = useSettings();
+  const { booking, isLoading } = useBooking();
+  const { settings, isLoading: isLoadingSettings } = useSettings();
+
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
 
   const moveBack = useMoveBack();
-  const { checkin, isCheckingIn } = useChecking();
+  const { checkin, isCheckingIn } = useCheckin();
 
-  if (isPending || isLoadingSettings) return <Spinner />;
+  if (isLoading || isLoadingSettings) return <Spinner />;
 
   const {
     id: bookingId,
@@ -92,13 +91,13 @@ function CheckinBooking() {
       )}
 
       <Box>
-        <CheckBox
+        <Checkbox
           checked={confirmPaid}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
           disabled={confirmPaid || isCheckingIn}
           id="confirm"
         >
-          I confirm that {guests.fullName} has paid the total amount{" "}
+          I confirm that {guests.fullName} has paid the total amount of{" "}
           {!addBreakfast
             ? formatCurrency(totalPrice)
             : `${formatCurrency(
@@ -106,7 +105,7 @@ function CheckinBooking() {
               )} (${formatCurrency(totalPrice)} + ${formatCurrency(
                 optionalBreakfastPrice
               )})`}
-        </CheckBox>
+        </Checkbox>
       </Box>
 
       <ButtonGroup>

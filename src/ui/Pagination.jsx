@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
@@ -74,6 +73,7 @@ function Pagination({ count }) {
     searchParams.set("page", next);
     setSearchParams(searchParams);
   }
+
   function prevPage() {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
 

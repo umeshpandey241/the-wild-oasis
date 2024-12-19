@@ -41,6 +41,7 @@ function UpdateUserDataForm() {
     setFullName(currentFullName);
     setAvatar(null);
   }
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormRow label="Email address">

@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Tag from "../../ui/Tag";
-import Button from "../../ui/Button";
 import { Flag } from "../../ui/Flag";
+import Button from "../../ui/Button";
 import CheckoutButton from "./CheckoutButton";
 
 const StyledTodayItem = styled.li`
@@ -28,8 +27,7 @@ const Guest = styled.div`
 
 function TodayItem({ activity }) {
   const { id, status, guests, numNights } = activity;
-  const navigate = useNavigate();
-  console.log(id, status);
+
   return (
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
@@ -43,7 +41,8 @@ function TodayItem({ activity }) {
         <Button
           size="small"
           variation="primary"
-          onClick={() => navigate(`/checkin/${id}`)}
+          as={Link}
+          to={`/checkin/${id}`}
         >
           Check in
         </Button>

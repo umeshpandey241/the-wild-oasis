@@ -8,7 +8,7 @@ import { useSignup } from "./useSignup";
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
-  const { signup, isPending } = useSignup();
+  const { signup, isLoading } = useSignup();
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
@@ -22,12 +22,12 @@ function SignupForm() {
   }
 
   return (
-    <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
           id="fullName"
-          disabled={isPending}
+          disabled={isLoading}
           {...register("fullName", { required: "This field is required" })}
         />
       </FormRow>
@@ -36,7 +36,7 @@ function SignupForm() {
         <Input
           type="email"
           id="email"
-          disabled={isPending}
+          disabled={isLoading}
           {...register("email", {
             required: "This field is required",
             pattern: {
@@ -54,7 +54,7 @@ function SignupForm() {
         <Input
           type="password"
           id="password"
-          disabled={isPending}
+          disabled={isLoading}
           {...register("password", {
             required: "This field is required",
             minLength: {
@@ -69,7 +69,7 @@ function SignupForm() {
         <Input
           type="password"
           id="passwordConfirm"
-          disabled={isPending}
+          disabled={isLoading}
           {...register("passwordConfirm", {
             required: "This field is required",
             validate: (value) =>
@@ -83,12 +83,12 @@ function SignupForm() {
         <Button
           variation="secondary"
           type="reset"
-          disabled={isPending}
+          disabled={isLoading}
           onClick={reset}
         >
           Cancel
         </Button>
-        <Button disabled={isPending}>Create new user</Button>
+        <Button disabled={isLoading}>Create new user</Button>
       </FormRow>
     </Form>
   );

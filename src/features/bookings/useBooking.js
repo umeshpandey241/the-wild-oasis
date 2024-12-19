@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBooking } from "../../services/apiBookings";
 import { useParams } from "react-router-dom";
+import { getBooking } from "../../services/apiBookings";
 
 export function useBooking() {
   const { bookingId } = useParams();
 
   const {
-    isPending,
+    isLoading,
     data: booking,
     error,
   } = useQuery({
@@ -15,5 +15,5 @@ export function useBooking() {
     retry: false,
   });
 
-  return { isPending, booking, error };
+  return { isLoading, error, booking };
 }

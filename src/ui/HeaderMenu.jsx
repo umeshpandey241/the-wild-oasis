@@ -12,6 +12,7 @@ const StyledHeaderMenu = styled.ul`
 
 function HeaderMenu() {
   const navigate = useNavigate();
+
   return (
     <StyledHeaderMenu>
       <li>

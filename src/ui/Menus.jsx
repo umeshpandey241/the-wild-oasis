@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
@@ -73,7 +72,6 @@ function Menus({ children }) {
   const [position, setPosition] = useState(null);
 
   const close = () => setOpenId("");
-
   const open = setOpenId;
 
   return (
@@ -87,8 +85,10 @@ function Menus({ children }) {
 
 function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
+
   function handleClick(e) {
     e.stopPropagation();
+
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
@@ -97,15 +97,16 @@ function Toggle({ id }) {
 
     openId === "" || openId !== id ? open(id) : close();
   }
+
   return (
     <StyledToggle onClick={handleClick}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
 }
-function List({ id, children }) {
-  const { openId, position } = useContext(MenusContext);
 
+function List({ id, children }) {
+  const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close, false);
 
   if (openId !== id) return null;
@@ -117,16 +118,20 @@ function List({ id, children }) {
     document.body
   );
 }
+
 function Button({ children, icon, onClick }) {
   const { close } = useContext(MenusContext);
+
   function handleClick() {
     onClick?.();
     close();
   }
+
   return (
     <li>
       <StyledButton onClick={handleClick}>
-        {icon} <span>{children}</span>
+        {icon}
+        <span>{children}</span>
       </StyledButton>
     </li>
   );

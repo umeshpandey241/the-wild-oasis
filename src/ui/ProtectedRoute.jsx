@@ -14,24 +14,27 @@ const FullPage = styled.div`
 
 function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  //load the authenticated user
-  const { isAuthenticated, isPending } = useUser();
 
-  //if there is no authenticated user, redirect to the login'
+  // 1. Load the authenticated user
+  const { isLoading, isAuthenticated } = useUser();
+
+  // 2. If there is NO authenticated user, redirect to the /login
   useEffect(
     function () {
-      if (!isAuthenticated && !isPending) navigate("/login");
+      if (!isAuthenticated && !isLoading) navigate("/login");
     },
-    [isAuthenticated, isPending, navigate]
+    [isAuthenticated, isLoading, navigate]
   );
 
-  //while loading show a spinner
-  if (isPending) return;
-  <FullPage>
-    <Spinner />;
-  </FullPage>;
+  // 3. While loading, show a spinner
+  if (isLoading)
+    return (
+      <FullPage>
+        <Spinner />
+      </FullPage>
+    );
 
-  //if ther is a user render the app
+  // 4. If there IS a user, render the app
   if (isAuthenticated) return children;
 }
 

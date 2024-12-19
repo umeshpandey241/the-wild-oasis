@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import Heading from "../../ui/Heading";
 import {
@@ -146,6 +145,7 @@ function DurationChart({ confirmedStays }) {
   const { isDarkMode } = useDarkMode();
   const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
+
   return (
     <ChartBox>
       <Heading as="h2">Stay duration summary</Heading>

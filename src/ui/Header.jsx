@@ -21,4 +21,5 @@ function Header() {
     </StyledHeader>
   );
 }
+
 export default Header;
